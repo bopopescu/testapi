@@ -8,7 +8,7 @@ class Emp(Resource):
         parser.add_argument('empno',type=int,required=True,help='empno cannot be left blank')
         data=parser.parse_args()
         try:
-            return query(f"""select * from testapi.emp1 where empno={data['empno']};""")
+            return query(f"""select * from testapi.emp where empno={data['empno']};""")
         except:
             return{"message":"there was an error connecting to emp table"},500
 
@@ -24,14 +24,14 @@ class Emp(Resource):
          parser.add_argument('deptno',type=int,required=True,help='deptno cannot be left blank')
          data=parser.parse_args()
          try:
-            x=query(f"""select * from testapi.emp1 where empno={data['empno']};""",return_json=False)
+            x=query(f"""select * from testapi.emp where empno={data['empno']};""",return_json=False)
             if len(x)>0:return {"message":"An emp with that info already exists"},400
 
          except:
             return{"message":"there was an error inserting to emp table"},500
          if data['comm']!=None:
             try:
-                query(f"""insert into testapi.emp1 values({data['empno']},
+                query(f"""insert into testapi.emp values({data['empno']},
                                                              '{data['ename']}',
                                                              '{data['job']}',
                                                               {data['mgr']},
@@ -44,7 +44,7 @@ class Emp(Resource):
             return {"message":"success inserted."},201
          else:
              try:
-                query(f"""insert into testapi.emp1(empno,ename,job,mgr,hiredate,sal,deptno) values({data['empno']},
+                query(f"""insert into testapi.emp(empno,ename,job,mgr,hiredate,sal,deptno) values({data['empno']},
                                                              '{data['ename']}',
                                                              '{data['job']}',
                                                               {data['mgr']},
